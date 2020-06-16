@@ -180,16 +180,33 @@ useradd -r --comment "Node-RED" --shell /bin/false nodered
 ```
 
 Step 5: Create service description file
-*Change file to `/lib/systemd/system/nodered.service` and `add systemctl enable`.*
 ```
-cat <<EOF | tee /etc/systemd/system/node-red.service
-** ToDo: Add file content
+cat <<EOF | tee /lib/systemd/system/node-red.service
+[Unit]
+Description=Node-RED
+
+[Service]
+User=nodered
+Group=nodered
+ExecStart=/usr/bin/node $NODE_OPTIONS /lib/node_modules/node-red/red.js --userDir /home/nodered $NODE_RED_OPTIONS
+WorkingDirectory=/home/nodered
+KillMode=control-group
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+Alias=node-red.service
 EOF
 ```
 
-Step 6: Start service
+Step 6: Enable service
 ```
-systemctl start grafana-server
+systemctl enable node-red
+```
+
+Step 7: Start service
+```
+systemctl start node-red
 ```
 
 ### Open firewall port for Node-RED
@@ -298,6 +315,75 @@ Mosquitto deafult port 1883.
 
 ```
 firewall-cmd --permanent --add-port=1883/tcp
+```
+
+```
+firewall-cmd --reload
+```
+
+## Nginx
+Install nginx as reverse proxy, so grafana and node-red should not require opened ports
+
+
+Step 0: Sudo
+
+
+Step 1: Install Nginx
+
+```
+yum install nginx
+```
+
+Step 2: Edit config file, add reverse proxies for services
+
+```
+nano /etc/nginx/nginx.conf
+```
+Add or edit the following lines
+```
+server {
+    listen       80 default_server;
+    listen       [::]:80 default_server;
+    server_name  _;
+    root         /usr/share/nginx/html;
+
+    location / {
+        proxy_pass      http://127.0.0.1:3000/;
+    }
+
+    location /nodered/ {
+        proxy_pass              http://127.0.0.1:1880/;
+        proxy_set_header        Host $http_host;
+        proxy_set_header        X-Real-IP $remote_addr;
+        proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header        X-Forwarded-Proto $scheme;
+        proxy_http_version      1.1;
+        proxy_set_header        Upgrade $http_upgrade;
+        proxy_set_header        Connection "upgrade";
+    }  
+```
+
+Step 3: Enable service
+```
+systemctl enable nginx.service
+```
+
+Step 4: Start service
+```
+systemctl start nginx.service
+```
+
+### Remove "permission denied" for reverse proxy
+If SELinux is enabled, change boolean setting (solves 502 gateway error):
+```
+setsebool -P httpd_can_network_connect 1
+```
+
+### Open firewall port for nginx
+HTTP port 80.
+
+```
+firewall-cmd --permanent --add-port=80/tcp
 ```
 
 ```
