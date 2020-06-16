@@ -1,5 +1,8 @@
 Links that is not used or mentioned in main installation, but still usefull.
 
+## Grafana
+* [Run Grafana behind a reverse proxy](https://grafana.com/tutorials/run-grafana-behind-a-proxy/#1)
+
 ## Node-RED
 Node-RED tips and tricks
 * [Post data to InfluxDB](https://flows.nodered.org/flow/1d06cc6dbb57544f2d8b)
