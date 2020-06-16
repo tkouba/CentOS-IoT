@@ -1,11 +1,11 @@
 # CentOS IoT Server
 
-Installation on CentOS 8 x64
+Installation on CentOS 8 x64    
 
 1. InfluxDB
 2. Grafana
 3. Node-RED
-4. Mosquito (future)
+4. Mosquito
 
 ## Preparation and prerequisites
 *NTP*
@@ -60,6 +60,36 @@ firewall-cmd --permanent --add-port=8088/tcp
 firewall-cmd --reload
 ```
 
+### Create database
+Start `influx` command line interface and use following commands
+
+```
+CREATE DATABASE sensor
+```
+
+```
+SHOW DATABASES
+```
+
+```
+CREATE USER admin WITH PASSWORD '<password>' WITH ALL PRIVILEGES
+```
+
+```
+CREATE USER demo WITH PASSWORD 'demo'
+```
+
+```
+GRANT ALL ON demo TO sensor
+```
+
+```
+INSERT sensor,location=Empiria,room=1154,stand=* temperature=18.24
+INSERT sensor,location=Empiria,room=1148,stand=1 temperature=18.25
+INSERT sensor,location=Empiria,room=*,stand=* temperature=18.24
+```
+
+
 ## Grafana
 From https://grafana.com/docs/grafana/latest/installation/rpm/ and 
 from https://www.howtoforge.com/tutorial/how-to-install-grafana-on-linux-servers/#step-install-grafana-on-centos- 
@@ -113,6 +143,13 @@ firewall-cmd --reload
 1. Open your web browser and go to http://localhost:3000/. 3000 is the default HTTP port that Grafana listens to if you haven’t configured a different port.
 2. On the login page, type `admin` for the username and password.
 3. Change your password.
+
+### Plugins
+
+```
+grafana-cli plugins install grafana-clock-panel
+```
+
 
 ## Node-RED
 Created from https://ketandesai.co.uk/os/install-node-red-on-centos-7/ and
@@ -209,3 +246,71 @@ node-red-admin hash-pw
 ### Node-RED plugins
 For installation of Node-RED plugins it must use trick to impersonate
 `npm` execution.
+
+## Mosquitto
+
+Step 0: Sudo
+
+
+Step 1: Install mosquitto
+
+```
+yum install mosquitto
+```
+
+Step 2: Create the directory where persistence db files will be stored, change owner to mosquitto:
+```
+mkdir /var/lib/mosquitto/
+chown mosquitto:mosquitto /var/lib/mosquitto/ -R
+```
+Step 3: Create mosquitto user with password
+```
+mosquitto_passwd -c /etc/mosquitto/pwfile demo
+```
+
+Step 4: Edit config file:
+```
+nano /etc/mosquitto/mosquitto.conf
+```
+
+Edit or add following lines
+```
+persistence true
+persistence_location /var/lib/mosquitto/
+persistence_file mosquitto.db
+
+allow_anonymous false
+password_file /etc/mosquitto/pwfile
+```
+
+Step 5: Enable service
+```
+systemctl enable mosquitto.service
+```
+
+Step 6: Start service
+```
+systemctl start mosquitto.service
+```
+
+### Open firewall port for Mosquitto
+Mosquitto deafult port 1883.
+
+```
+firewall-cmd --permanent --add-port=1883/tcp
+```
+
+```
+firewall-cmd --reload
+```
+
+## Other
+
+Remove cockpit (or not)
+```
+sudo systemctl stop cockpit
+sudo systemctl disable cockpit
+sudo yum remove cockpit
+sudo firewall-cmd --permanent --remove-service=cockpit
+sudo firewall-cmd --reload
+```
