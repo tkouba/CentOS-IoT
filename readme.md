@@ -345,10 +345,9 @@ server {
     listen       80 default_server;
     listen       [::]:80 default_server;
     server_name  _;
-    root         /usr/share/nginx/html;
-
-    location / {
-        proxy_pass      http://127.0.0.1:3000/;
+   
+    location /static/ {
+        root         /usr/share/nginx/html;
     }
 
     location /nodered/ {
@@ -361,6 +360,10 @@ server {
         proxy_set_header        Upgrade $http_upgrade;
         proxy_set_header        Connection "upgrade";
     }  
+
+    location / {
+        proxy_pass      http://127.0.0.1:3000/;
+    }
 ```
 
 Step 3: Enable service
