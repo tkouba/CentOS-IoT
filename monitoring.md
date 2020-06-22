@@ -100,6 +100,14 @@ Check or update required `inputs`.
 ## Grafana
 
 
+## Troubleshooting
+
+### Telegraf failing to start
+Try to start Telegraf from the console and see output
+```
+/usr/bin/telegraf --config /etc/telegraf/telegraf.conf --config-directory /etc/telegraf/telegraf.d --test
+```
+
 
 
 ## Links
