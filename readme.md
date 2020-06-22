@@ -2,10 +2,11 @@
 
 Installation on CentOS 8 x64    
 
-1. InfluxDB
-2. Grafana
-3. Node-RED
-4. Mosquito
+1. [InfluxDB as time series database backend](#influxdb)
+2. [Grafana](#grafana)
+3. [Node-RED](#grafana)
+4. [Mosquitto MQTT broker](#mosquitto)
+5. [Nginx as reverse proxy for Grafana and Node-RED](#nginx)
 
 ## Preparation and prerequisites
 *NTP*
@@ -80,7 +81,7 @@ CREATE USER demo WITH PASSWORD 'demo'
 ```
 
 ```
-GRANT ALL ON demo TO sensor
+GRANT ALL ON sensor TO demo
 ```
 
 ```
