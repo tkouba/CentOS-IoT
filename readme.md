@@ -346,9 +346,10 @@ server {
     listen       80 default_server;
     listen       [::]:80 default_server;
     server_name  _;
-   
+    root         /usr/share/nginx/html;
+
     location /static/ {
-        root         /usr/share/nginx/html;
+        alias   /usr/share/nginx/html/;
     }
 
     location /nodered/ {
