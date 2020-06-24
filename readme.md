@@ -4,9 +4,14 @@ Installation on CentOS 8 x64
 
 1. [InfluxDB as time series database backend](#influxdb)
 2. [Grafana](#grafana)
-3. [Node-RED](#grafana)
+3. [Node-RED](#node-red)
 4. [Mosquitto MQTT broker](#mosquitto)
+
+**Optional steps**
+
 5. [Nginx as reverse proxy for Grafana and Node-RED](#nginx)
+6. [Monitor server resources using Telegraf and InfluxDB](monitoring.md)
+
 
 ## Preparation and prerequisites
 *NTP*
