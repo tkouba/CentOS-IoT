@@ -270,6 +270,13 @@ node-red-admin hash-pw
 For installation of Node-RED plugins it must use trick to impersonate
 `npm` execution.
 
+```
+su
+cd /home/nodered/
+sudo -u nodered npm install <plugin name>
+service node-red restart
+```
+
 ## Mosquitto
 
 Step 0: Sudo
