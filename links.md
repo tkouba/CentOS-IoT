@@ -1,5 +1,8 @@
 Links that is not used or mentioned in main installation, but still useful.
 
+## Influx
+* [Convert Timestamps to Become Readable ](https://www.influxdata.com/blog/tldr-influxdb-tech-tips-august-4-2016/) - Use parameter: `influx -precision rfc3339`
+
 ## Grafana
 * [Run Grafana behind a reverse proxy](https://grafana.com/tutorials/run-grafana-behind-a-proxy/#1)
 

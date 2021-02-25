@@ -11,7 +11,8 @@ Installation on CentOS 8 x64
 
 5. [Nginx as reverse proxy for Grafana and Node-RED](#nginx)
 6. [Monitor server resources using Telegraf and InfluxDB](monitoring.md)
-
+7. [Add SSH key-based authentication](ssh.md)
+8. [Create Hardwario PiHUB for IoT Kit TOWER](pihub/pihub.md)
 
 ## Preparation and prerequisites
 *NTP*

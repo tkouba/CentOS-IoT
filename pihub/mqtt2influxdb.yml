@@ -1,0 +1,82 @@
+mqtt:
+  host: 127.0.0.1
+  port: 1883
+
+influxdb:
+  host: 172.28.3.200
+  port: 8086
+  database: demo
+
+points:
+  - measurement: temperature
+    topic: node/+/thermometer/+/temperature
+    fields:
+      value: $.payload
+    tags:
+      device: $.topic[1]
+      location: Prague
+
+  - measurement: relative-humidity
+    topic: node/+/hygrometer/+/relative-humidity
+    fields:
+      value: $.payload
+    tags:
+      device: $.topic[1]
+      location: Prague
+
+  - measurement: illuminance
+    topic: node/+/lux-meter/0:0/illuminance
+    fields:
+      value: $.payload
+    tags:
+      device: $.topic[1]
+      location: Prague
+
+  - measurement: pressure
+    topic: node/+/barometer/0:0/pressure
+    fields:
+      value: $.payload
+    tags:
+      device: $.topic[1]
+      location: Prague
+
+  - measurement: co2
+    topic: node/+/co2-meter/-/concentration
+    fields:
+      value: $.payload
+    tags:
+      device: $.topic[1]
+      location: Prague
+
+  - measurement: voltage
+    topic: node/+/battery/+/voltage
+    fields:
+      value: $.payload
+    tags:
+      device: $.topic[1]
+      location: Prague
+
+  - measurement: button
+    topic: node/+/push-button/+/event-count
+    fields:
+      value: $.payload
+    tags:
+      device: $.topic[1]
+      location: Prague
+      channel: $.topic[3]
+
+  - measurement: tvoc
+    topic: node/+/voc-lp-sensor/0:0/tvoc
+    fields:
+      value: $.payload
+    tags:
+      device: $.topic[1]
+      location: Prague
+
+  - measurement: tvoc
+    topic: node/+/voc-sensor/0:0/tvoc
+    fields:
+      value: $.payload
+    tags:
+      device: $.topic[1]
+      location: Prague
