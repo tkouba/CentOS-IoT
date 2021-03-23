@@ -2,6 +2,7 @@
 
 1. Download [hardwario hio-raspbian-buster-lite](https://github.com/hardwario/bc-raspbian/releases) or use [Custom Setup on Raspberry Pi](https://tower.hardwario.com/en/latest/tutorials/custom-setup-on-raspberry-pi/)
 2. Write img file using [balenaEtcher](https://www.balena.io/etcher/) or [Raspberry Pi Imager](https://www.raspberrypi.org/software/)
+  > [Version 1.6](https://www.raspberrypi.org/blog/raspberry-pi-imager-update-to-v1-6/) of [Raspberry Pi Imager](https://www.raspberrypi.org/software/) has an advanced options menu under the magic key sequence: `Ctrl+Shift+X`
 3. Boot raspberry (user: `pi`, password: `raspberry`)
 4. Set static IP address in `/etc/dhcpcd.conf`
 5. *Recommended:* Change default password
