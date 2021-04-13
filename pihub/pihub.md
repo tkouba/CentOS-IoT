@@ -9,7 +9,7 @@
 3. Boot raspberry (user: `pi`, password: `raspberry`)
 4. [Set static IP address](https://www.raspberrypi.org/documentation/configuration/tcpip/) in `/etc/dhcpcd.conf`
 5. *Recommended:* Change default password
-6. *Optional:* [Add SSH key-based authentication](ssh.md)
+6. *Optional:* [Add SSH key-based authentication](../ssh.md)
 
 ## Update/upgrade OS
 
