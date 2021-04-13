@@ -3,8 +3,11 @@
 1. Download [hardwario hio-raspbian-buster-lite](https://github.com/hardwario/bc-raspbian/releases) or use [Custom Setup on Raspberry Pi](https://tower.hardwario.com/en/latest/tutorials/custom-setup-on-raspberry-pi/)
 2. Write img file using [balenaEtcher](https://www.balena.io/etcher/) or [Raspberry Pi Imager](https://www.raspberrypi.org/software/)
   > [Version 1.6](https://www.raspberrypi.org/blog/raspberry-pi-imager-update-to-v1-6/) of [Raspberry Pi Imager](https://www.raspberrypi.org/software/) has an advanced options menu under the magic key sequence: `Ctrl+Shift+X`
+  > * Hostname configuration
+  > * Set SSH key-based autenthication
+  > * Set WiFi SSID and password
 3. Boot raspberry (user: `pi`, password: `raspberry`)
-4. Set static IP address in `/etc/dhcpcd.conf`
+4. [Set static IP address](https://www.raspberrypi.org/documentation/configuration/tcpip/) in `/etc/dhcpcd.conf`
 5. *Recommended:* Change default password
 6. *Optional:* [Add SSH key-based authentication](ssh.md)
 
@@ -18,6 +21,13 @@
     ```
     sudo apt upgrade
     ```
+
+## Test and connect TOWER kit
+
+List of paired nodes
+```
+bch node list
+```
 
 ## Connect Mosquitto and InfluxDBB
 From [Connect Mosquitto and InfluxDB](https://tower.hardwario.com/en/latest/integrations/grafana-for-visualization/#connect-mosquitto-and-influxdb)
@@ -50,3 +60,21 @@ From [Connect Mosquitto and InfluxDB](https://tower.hardwario.com/en/latest/inte
     ```
     pm2 save
     ```
+
+## Remove unused node-red
+1. Check if node-red is running
+```
+pm2 list
+```
+2. Stop node-red
+```
+pm2 stop node-red
+```
+3. For stop only, skip delete step
+```
+pm2 delete node-red
+```
+4. Save PM2 state
+```
+pm2 save
+```
